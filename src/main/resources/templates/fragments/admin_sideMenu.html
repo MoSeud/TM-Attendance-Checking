@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="admin_sideMenu">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-profile">
+                <div class="nav-link">
+                    <div class="user-wrapper">
+                        <div class="profile-image">
+                            <img th:src="@{/images/admin.jpg}" src="../../static/images/admin.jpg"
+                                 alt="profile image">
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name" text="Admin"></p>
+                            <div>
+                                <small class="designation text-muted">Administrator</small>
+                                <span class="status-indicator online"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                   aria-controls="ui-basic">
+                    <i class="menu-icon mdi mdi-content-copy"></i>
+                    <span class="menu-title">Event</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/event/list}">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/event/uploadFile}">Upload Attendance</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/attendance/getByEntry}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Attendance</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/student/list}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Student</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/faculty/list}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Faculty</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/section/list}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Section</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/course/list}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Course</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location/list}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Location</span>
+                </a>
+            </li>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

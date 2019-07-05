@@ -1,0 +1,35 @@
+
+<div th:fragment="studentAttendance" xmlns:th="http://www.thymeleaf.org" >
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 th:if="${!attendances.empty}" class="card-title">AttendanceList for block <strong th:text="${attendances[0].block.name}"></strong> which has <strong th:text="${attendances[0].sessionsInBlock}"></strong> Days</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+
+                            <th>Student</th>
+                            <th>Days Present</th>
+                            <th>Percentage Attended</th>
+                            <th>Extra point</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${attendances.empty}">
+                            <td colspan="4" style="text-align: center">No Data</td>
+                        </tr>
+                        <tr th:each="attendance:${attendances}">
+                            <td th:text="${attendance.student.firstName + ' '+attendance.student.lastName}"></td>
+                            <td th:text="${attendance.daysPresent}" ></td>
+                            <td th:text="${attendance.percentageAttended} +'%'"></td>
+                            <td th:text="${attendance.extraCreditPoints}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="admin_sideMenu">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-profile">
+                <div class="nav-link">
+                    <div class="user-wrapper">
+                        <div class="profile-image">
+                            <img th:src="@{/images/admin.jpg}" src="../../static/images/admin.jpg"
+                                 alt="profile image">
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name" th:text=" ${#httpSession.getAttribute('person') != null ? #httpSession.getAttribute('person').firstName:'Faculty user'}"></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/attendance}" href="index.html">
+                    <i class="menu-icon mdi mdi-television"></i>
+                    <span class="menu-title">Student Attendance</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

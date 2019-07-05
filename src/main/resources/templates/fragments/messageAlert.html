@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="messageAlerts" id="messageAlerts">
+    <div class="alert alert-danger" role="alert" style="line-height: 0.5em;" th:if="${errorMessage != null || param.error != null}">
+        <h2 style="margin-top: 0"><i class="fa fa-times-circle"></i> Failed</h2>
+        <span th:if="${errorMessage != null}" th:text="#{${errorMessage}}"></span>
+        <span th:if="${param.error != null}">Check Your Username or Password.</span>
+    </div>
+    <div class="alert alert-warning" role="alert" style="line-height: 0.5em;" th:if="${warningMessage != null}">
+        <h2 style="margin-top: 0"><i class="fa fa-warning"></i> Warning</h2>
+        <span th:text="#{${warningMessage}}"></span>
+    </div>
+    <div class="alert alert-success" role="alert" style="line-height: 0.5em;" th:if="${successMessage != null}">
+        <h2 style="margin-top: 0"><i class="fa fa-check-circle"></i> Success</h2>
+        <span th:text="#{${successMessage}}"></span>
+    </div>
+</div>

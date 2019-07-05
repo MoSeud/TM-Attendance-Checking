@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TM Checking And Retreat</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/vendors/bootstrap/css/bootstrap.css}"  rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/full-width-pics.css}"   rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/vendors/font-awesome.css}"  href="../../css/vendors/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/css/vendors/vendor.bundle.addons.css}"  href="../../css//vendors/vendor.bundle.addons.css">
+    <link rel="stylesheet" th:href="@{/css/vendors/vendor.bundle.base.css}"  href="../../css/vendors/vendor.bundle.base.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}"  href="../../css/style.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}"  href="../../css/main.css">
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.7.2/css/all.css}"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Task List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/resources/css/core.css}">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $("#logout").click(function() {
+                $('#logoutForm').submit();
+            })
+        })
+        $(function() {
+            $("#calculateAll").click(function() {
+                $.post("/report/calculateAll", function(data) {
+                    alert("Finished the report calculation");
+                });
+            })
+        })
+        function save(filename, data) {
+            var blob = new Blob([ data ], {
+                type : 'text/csv'
+            });
+            if (window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveBlob(blob, filename);
+            } else {
+                var elem = window.document.createElement('a');
+                elem.href = window.URL.createObjectURL(blob);
+                elem.download = filename;
+                document.body.appendChild(elem);
+                elem.click();
+                document.body.removeChild(elem);
+            }
+        }
+        $(function() {
+
+            $('#export').click(function() {
+                var all = [];
+                var id = "#dataSource";
+                $(id + "> tbody  > tr").each(function() {
+                    var cols = [];
+                    $(this).find('td').each(function(colIndex, c) {
+                        cols.push(c.textContent);
+                    });
+                    all.push(cols.join(","));
+                })
+                save("dataFile.csv", all.join("\n"));
+            })
+        })
+    </script>
+</head >
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">TM check Attendance</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/event/add}">Event
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/event/uploadFile}">UploadFile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/attendance/getByEntry}">Attendance</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/tm/retreatCreate}">TM Check/Retreat Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">LogOut</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Header - set the background image for the header in the line below -->
+<header>
+    <!--&lt;!&ndash;<img class="img-fluid d-block mx-auto" src="http://placehold.it/200x200&text=Logo" alt="">&ndash;&gt;-->
+</header>
+
+<!-- Content section -->
+    <div class="container">
+        <fieldset style="margin-top: 100px">
+
+            <form method="POST" th:action="@{/tm/retreatCreate}"
+                  th:object="${tmCheckRetreatDto}">
+                <input type="hidden" th:field="*{id}" />
+                <ul th:if="${#fields.hasErrors('global')}" class="text-danger">
+                    <li th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+                        is incorrect</li>
+                </ul>
+
+                <div class="form-group row">
+                    <label for="date" class="col-sm-2 col-form-label">Date:</label>
+                    <div class="col-sm-10">
+                        <input type="date" id="date" class="datepicker form-control"
+                               th:field="*{date}" />
+                    </div>
+                    <div class="text-danger" th:if="${#fields.hasErrors('date')}"
+                         th:errors="*{date}">Date is missing</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Type:</label>
+                    <div class="form-check form-check-inline"
+                         th:each="val:${T(com.redsea.mas.domain.TmCheckRetreat.CheckRetreatType).values()}">
+                        <input class="form-check-input" type="radio" th:field="*{type}"
+                               th:value="${val}"> <label class="form-check-label"
+                                                         th:for="${#ids.prev('type')}" th:text="${val}"> Default
+                        radio </label>
+                    </div>
+                    <div class="text-danger" th:if="${#fields.hasErrors('type')}"
+                         th:errors="*{type}">Type is missing</div>
+                </div>
+                <div class="form-group row">
+                    <label for="date" class="col-sm-2 col-form-label">Student:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="student" class="datepicker form-control"
+                               th:field="*{student}" />
+                    </div>
+                    <div class="text-danger" th:if="${#fields.hasErrors('student')}"
+                         th:errors="*{student}">Student field is empty</div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" name="Submit"
+                        type="Submit">
+                    <span class="glyphicon glyphicon-cloud"></span> Submit
+                </button>
+
+            </form>
+        </fieldset>
+
+    </div>
+
+
+<div th:replace="event/attendanceRecord/lists :: EventList"></div>
+
+<!--<div th:if="${successMessage != null}" >-->
+    <!--<div th:replace="event/attendanceRecord/lists :: EventList"></div>-->
+<!--</div>-->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; TmChecking.com 2019</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

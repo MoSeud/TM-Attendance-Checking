@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="singleStudentAttendance">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Cumulative Attendance info for <strong th:text="${attendance.student.firstName+' '+ attendance.student.lastName}"></strong></h2>
+            <div class="template-demo">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Sessions in block:</p>
+                        <p>Days present:</p>
+                        <p>Percentage attended:</p>
+                        <p>Extra credit points:</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong th:text="${attendance.sessionsInBlock}"></strong></p>
+                        <p><strong th:text="${attendance.daysPresent}" ></strong></p>
+                        <p><strong th:text="${attendance.percentageAttended}"></strong></p>
+                        <p><strong th:text="${attendance.extraCreditPoints}" ></strong></p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

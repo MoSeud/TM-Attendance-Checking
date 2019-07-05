@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head th:include="layout::headerFrag(pageTitle='Event List')"></head>
+<body th:include="layout::bodyFrag(pageBody='Event List')">
+<div th:fragment="content">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <a  th:href="@{/event/add}" href="#">
+                <button type="button" class="btn btn-inverse-primary btn-rounded ">Add Event</button>
+            </a>
+            <div class="card-body">
+                <h4 class="card-title">Event List</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Location</th>
+                            <th>Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${events.empty}">
+                            <td colspan="7" style="text-align: center">No Data</td>
+                        </tr>
+                        <tr th:each="event:${events}">
+                            <td th:text="${event.eventType ==null ? '': event.eventType.name}"></td>
+                            <td th:text="${event.duration== null ? '': event.duration.startDate}"></td>
+                            <td th:text="${event.duration== null ? '': event.duration.endDate}"></td>
+                            <td th:text="${event.location==null ? '': event.location.name}"></td>
+                            <td>
+                                <a th:href="@{'/event/edit/'+ ${event.id}}"><i class="fa fa-edit"></i></a>
+                                <a th:href="@{'/event/delete/'+ ${event.id}}"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      layout:decorator="layout">
+<head th:include="layout::headerFrag(pageTitle='Add Event')"></head>
+<body th:include="layout::bodyFrag(pageBody='Add Event')">
+<div th:fragment="content">
+    <div class=" grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Event</h4>
+                <p class="card-description">Add an event to collect attendance</p>
+                <form class="forms-sample" th:action="@{/event/add}" method="post" th:object="${event}">
+                    <ul th:if="${#fields.hasErrors('*')}">
+                        <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is Incorrect</li>
+                    </ul>
+
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group" th:classappend="${#fields.hasErrors('duration')} ? 'border-danger' : ''">
+                        <label
+                                for="duration"><span th:text="#{event.form.duration}">Duration</span></label>
+                        <select id="duration" class="form-control" th:field="*{duration}">
+                            <option value="">Select Duration</option>
+                            <option th:each="dur: ${durations}"
+                                    th:value="${dur.id}"
+                                    th:text="${dur.name}">
+
+                            </option>
+                        </select>
+                        <div class="help-block with-errors">
+                            <p  class="help-block" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"
+                                th:errorclass="fieldError">Invalid
+                                Duration</p>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="eventType"><span th:text="#{event.form.eventType}">Event Type</span></label>
+                        <select id="eventType" class="form-control" th:field="*{eventType}">
+                            <option value="">Select Event Type</option>
+                            <option th:each="type: ${eventTypes}"
+                                    th:value="${type.id}"
+                                    th:text="${type.name}">
+
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('eventType')}" th:errors="*{eventType}"
+                           th:errorclass="fieldError">Invalid
+                            Event Type</p>
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="location"><span th:text="#{event.form.location}">Location</span></label>
+                        <select id="location" class="form-control" th:field="*{location}">
+                            <option value="">Select Event Location</option>
+                            <option th:each="loc : ${locations}"
+                                    th:value="${loc.id}"
+                                    th:text="${loc.name}">
+
+                            </option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}"
+                           th:errorclass="fieldError">Invalid
+                            Location</p>
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="description"><span th:text="#{event.form.description}">Description</span></label>
+                        <textarea type="text" th:field="*{description}" class="form-control" id="description" placeholder="Description"></textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                           th:errorclass="fieldError">Invalid
+                            Description</p>
+                    </div>
+                    <button type="submit" class="btn btn-success mr-2" th:value="#{form.button.add}">save</button>
+                    <button type="reset" class="btn btn-success mr-2" th:value="#{form.button.reset}">Rest</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

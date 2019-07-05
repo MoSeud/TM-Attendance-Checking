@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en"
+      layout:decorator="layout">
+<head th:include="layout::headerFrag(pageTitle='Add Event')"></head>
+<body th:include="layout::bodyFrag(pageBody='Add Event')">
+<div th:fragment="content">
+    <div class=" grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Event</h4>
+                <p class="card-description">Add an event to collect attendance</p>
+                <form class="forms-sample" th:action="@{/event/attendanceRecordAutomatic}" enctype="multipart/form-data" method="post" >
+                    <div class="form-group">
+                        <label>Upload Automatic Generated File</label>
+                        <!--<input type="file" name="attendanceRecord" class="file-upload-default">-->
+                        <div class="input-group col-xs-12">
+                            <input type="file" name="attendanceRecord" class="form-control file-upload-info" required="required"  placeholder="Upload Image">
+                            <span class="input-group-append">
+                          <input class="file-upload-browse btn btn-info" type="submit" value="Upload">
+                        </span>
+                        </div>
+
+                    </div>
+                </form>
+                <form class="forms-sample" th:action="@{/event/attendanceRecordManual}" enctype="multipart/form-data" method="post" >
+                    <div class="form-group">
+                        <label>Upload Manual Generated File</label>
+                        <!--<input type="file" name="attendanceRecord" class="file-upload-default">-->
+                        <div class="input-group col-xs-12">
+                            <input type="file" name="attendanceRecord" class="form-control file-upload-info" required="required"  placeholder="Upload Image">
+                            <span class="input-group-append">
+                          <input class="file-upload-browse btn btn-info" type="submit" value="Upload">
+                        </span>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div th:if="${successMessage != null}" >
+        <div th:replace="event/attendanceRecord/lists :: recorddList"></div>
+    </div>
+</div>
+</body>
+</html>
